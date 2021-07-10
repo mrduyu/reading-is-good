@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  readingisgoodservice:
+    image: reading-is-good
+    build:
+      context: ./reading-is-good
+      dockerfile: Dockerfile
+    container_name: readingisgoodservice
+    ports:
+      - "8102:8102"
+    networks:
+      - getirnetwork
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: mymongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - getirnetwork
+
+networks:
+  getirnetwork:
+    name: getirnetwork
+    driver: bridge
